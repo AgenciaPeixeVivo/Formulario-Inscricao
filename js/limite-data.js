@@ -68,3 +68,4 @@ function verificarPeriodoDisponibilidade() {
 document.addEventListener("DOMContentLoaded", verificarPeriodoDisponibilidade);
 
 
+
