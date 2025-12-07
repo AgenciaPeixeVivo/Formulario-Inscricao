@@ -65,9 +65,7 @@ function atualizarInformacoesPix() {
   if (config) {
     document.getElementById("valorTaxa").textContent = config.valor;
     document.getElementById("qrcodeImage").src = config.imagem;
-    document.getElementById("pixKey").value = config.chavePix;
-
-    console.log("✅ PIX atualizado para:", funcaoSelecionada);
+    document.getElementById("pixKey").value = config.chavePix;   
   }
 }
 
@@ -900,3 +898,4 @@ function initializeForm() {
 document.addEventListener("DOMContentLoaded", initializeForm);
 window.addEventListener("load", initializeForm);
 document.addEventListener("pageshow", initializeForm);
+
