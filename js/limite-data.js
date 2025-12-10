@@ -66,6 +66,3 @@ function verificarPeriodoDisponibilidade() {
 
 // Executar quando o DOM estiver carregado
 document.addEventListener("DOMContentLoaded", verificarPeriodoDisponibilidade);
-
-
-
