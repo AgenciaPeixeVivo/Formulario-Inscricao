@@ -66,8 +66,8 @@ function atualizarInformacoesPix() {
     document.getElementById("valorTaxa").textContent = config.valor;
     document.getElementById("qrcodeImage").src = config.imagem;
     document.getElementById("pixKey").value = config.chavePix;
-    
-    console.log("✅ PIX atualizado para:", funcaoSelecionada);
+
+    //console.log("✅ PIX atualizado para:", funcaoSelecionada);
   }
 }
 
@@ -77,7 +77,7 @@ function atualizarTaxaPorFuncao() {
   const taxaSelect = document.getElementById("taxa");
   const funcaoSelecionada = funcaoSelect.value;
   const config = cargosConfig[funcaoSelecionada];
-  
+
   if (config && taxaSelect) {
     // Se não for isento, atualiza para a taxa correspondente
     if (taxaSelect.value !== "isento") {
@@ -85,10 +85,10 @@ function atualizarTaxaPorFuncao() {
       // Atualiza o display visual
       atualizarDisplayTaxa();
     }
-    
+
     // Atualiza as opções da taxa
     atualizarOpcoesTaxa(funcaoSelecionada);
-    
+
     // Atualiza informações PIX se não for isento
     if (taxaSelect.value !== "isento") {
       atualizarInformacoesPix();
@@ -100,11 +100,11 @@ function atualizarTaxaPorFuncao() {
 function atualizarOpcoesTaxa(funcaoSelecionada) {
   const taxaSelect = document.getElementById("taxa");
   const config = cargosConfig[funcaoSelecionada];
-  
+
   if (config && taxaSelect) {
     // Encontra e atualiza a opção correspondente ao valor
-    const opcoesTaxa = taxaSelect.querySelectorAll('option');
-    opcoesTaxa.forEach(opcao => {
+    const opcoesTaxa = taxaSelect.querySelectorAll("option");
+    opcoesTaxa.forEach((opcao) => {
       if (opcao.value === config.valorNumero) {
         opcao.textContent = config.valorTexto;
       }
@@ -116,7 +116,7 @@ function atualizarOpcoesTaxa(funcaoSelecionada) {
 function atualizarDisplayTaxa() {
   const taxaSelect = document.getElementById("taxa");
   const valorSelecionado = taxaSelect.value;
-  
+
   // Cria ou atualiza o elemento de display
   let taxaDisplay = document.getElementById("taxaDisplay");
   if (!taxaDisplay) {
@@ -129,7 +129,7 @@ function atualizarDisplayTaxa() {
     taxaDisplay.style.textAlign = "center";
     taxaSelect.parentNode.appendChild(taxaDisplay);
   }
-  
+
   if (valorSelecionado === "isento") {
     // Mostrar texto de isenção
     taxaDisplay.textContent = "Isento de Taxa";
@@ -141,7 +141,7 @@ function atualizarDisplayTaxa() {
     const funcaoSelect = document.querySelector('select[name="funcao"]');
     const funcaoSelecionada = funcaoSelect.value;
     const config = cargosConfig[funcaoSelecionada];
-    
+
     if (config) {
       taxaDisplay.textContent = `Taxa de Inscrição: ${config.valor}`;
       taxaDisplay.style.background = "#fff3cd";
@@ -480,7 +480,7 @@ function validatePage(pageIndex) {
     const cpfInput = document.getElementById("cpf");
     if (cpfInput) {
       const cpfLimpo = cpfInput.value.replace(/\D/g, "");
-      
+
       if (cpfLimpo.length > 0 && cpfLimpo.length < 11) {
         valid = false;
         const error = document.createElement("div");
@@ -488,8 +488,7 @@ function validatePage(pageIndex) {
         error.textContent = "CPF incompleto. Digite os 11 números.";
         cpfInput.parentNode.appendChild(error);
         cpfInput.classList.add("invalido");
-      }
-      else if (cpfLimpo.length === 11 && !validarCPF(cpfInput.value)) {
+      } else if (cpfLimpo.length === 11 && !validarCPF(cpfInput.value)) {
         valid = false;
         const error = document.createElement("div");
         error.className = "error-message";
@@ -551,6 +550,51 @@ function validatePage(pageIndex) {
   }
 
   if (page.id === "page5") {
+    // ✅ CORREÇÃO: VALIDAÇÃO PARA CAMPO "OUTRO" EM ORIGEM DA INFORMAÇÃO
+    const origemInfo = document.getElementById("origemInfo");
+    const origemInfoOutro = document.getElementById("origemInfoOutro");
+    
+    if (origemInfo && origemInfo.value === "outro") {
+      if (!origemInfoOutro || origemInfoOutro.value.trim() === "") {
+        valid = false;
+        
+        const error = document.createElement("div");
+        error.className = "error-message";
+        error.textContent = "Por favor, especifique como obteve a informação";
+        
+        if (origemInfoOutro) {
+          origemInfoOutro.insertAdjacentElement("afterend", error);
+          origemInfoOutro.style.borderColor = "#dc3545";
+          origemInfoOutro.style.background = "#f8d7da";
+        } else {
+          origemInfo.insertAdjacentElement("afterend", error);
+        }
+      }
+    }
+
+    // ✅ CORREÇÃO: VALIDAÇÃO PARA CAMPO DE PARENTESCO
+    const parentesco = document.getElementById("parentesco");
+    const grauParentesco = document.getElementById("grauParentesco");
+    
+    if (parentesco && parentesco.value === "sim") {
+      if (!grauParentesco || grauParentesco.value.trim() === "") {
+        valid = false;
+        
+        const error = document.createElement("div");
+        error.className = "error-message";
+        error.textContent = "Por favor, informe o grau de parentesco";
+        
+        if (grauParentesco) {
+          grauParentesco.insertAdjacentElement("afterend", error);
+          grauParentesco.style.borderColor = "#dc3545";
+          grauParentesco.style.background = "#f8d7da";
+        } else {
+          parentesco.insertAdjacentElement("afterend", error);
+        }
+      }
+    }
+
+    // ✅ VALIDAÇÃO LGPD (existente)
     const lgpdSelected = document.querySelector('input[name="lgpd"]:checked');
     if (!lgpdSelected) {
       valid = false;
@@ -570,9 +614,64 @@ function validatePage(pageIndex) {
 }
 
 /* ------------------------- */
-/*  CAMPOS DINÂMICOS */
+/*  CAMPOS DINÂMICOS - CORRIGIDOS */
 /* ------------------------- */
 
+// ✅ CORREÇÃO CRÍTICA: Evento para campo "origemInfo" (Seção 5)
+document.getElementById("origemInfo").addEventListener("change", (e) => {
+  const campo = document.getElementById("origemInfoOutroContainer");
+  const inputOutro = document.getElementById("origemInfoOutro");
+  
+  // Mostrar/ocultar o campo
+  campo.classList.toggle("hidden", e.target.value !== "outro");
+  
+  // Tornar obrigatório apenas quando "outro" for selecionado
+  if (inputOutro) {
+    inputOutro.required = e.target.value === "outro";
+    
+    // Limpar o valor se não for "outro"
+    if (e.target.value !== "outro") {
+      inputOutro.value = "";
+      inputOutro.style.borderColor = "";
+      inputOutro.style.background = "";
+      
+      // Remover mensagens de erro
+      const error = inputOutro.nextElementSibling;
+      if (error && error.className === "error-message") {
+        error.remove();
+      }
+    }
+  }
+});
+
+// ✅ CORREÇÃO: Evento para campo "parentesco" (Seção 5)
+document.getElementById("parentesco").addEventListener("change", (e) => {
+  const campo = document.getElementById("campoGrauParentesco");
+  const inputGrau = document.getElementById("grauParentesco");
+  
+  // Mostrar/ocultar o campo
+  campo.classList.toggle("hidden", e.target.value !== "sim");
+  
+  // Tornar obrigatório apenas quando "sim" for selecionado
+  if (inputGrau) {
+    inputGrau.required = e.target.value === "sim";
+    
+    // Limpar o valor se não for "sim"
+    if (e.target.value !== "sim") {
+      inputGrau.value = "";
+      inputGrau.style.borderColor = "";
+      inputGrau.style.background = "";
+      
+      // Remover mensagens de erro
+      const error = inputGrau.nextElementSibling;
+      if (error && error.className === "error-message") {
+        error.remove();
+      }
+    }
+  }
+});
+
+// Eventos existentes - manter
 document.getElementById("estadoCivil").addEventListener("change", (e) => {
   const campo = document.getElementById("campoOutroEstadoCivil");
   campo.classList.toggle("hidden", e.target.value !== "outro");
@@ -584,18 +683,6 @@ document.getElementById("pcd").addEventListener("change", (e) => {
   const campo = document.getElementById("campoPcdDescricao");
   campo.classList.toggle("hidden", e.target.value !== "sim");
   document.getElementById("descricaoPcd").required = e.target.value === "sim";
-});
-
-document.getElementById("origemInfo").addEventListener("change", (e) => {
-  const campo = document.getElementById("origemInfoOutro");
-  campo.classList.toggle("hidden", e.target.value !== "outro");
-  campo.required = e.target.value === "outro";
-});
-
-document.getElementById("parentesco").addEventListener("change", (e) => {
-  const campo = document.getElementById("campoGrauParentesco");
-  campo.classList.toggle("hidden", e.target.value !== "sim");
-  campo.querySelector("input").required = e.target.value === "sim";
 });
 
 document.getElementById("genero")?.addEventListener("change", (e) => {
@@ -622,8 +709,10 @@ checkboxesFormacao.forEach((checkbox) => {
     const existingField = document.getElementById(this.value + "Input");
 
     if (this.checked && !existingField) {
-      const labelText = this.parentElement.querySelector('span').textContent.trim();
-      
+      const labelText = this.parentElement
+        .querySelector("span")
+        .textContent.trim();
+
       const input = document.createElement("input");
       input.type = "text";
       input.placeholder = `Informe seus cursos em ${labelText}`;
@@ -881,7 +970,7 @@ function initializeForm() {
   // ✅ ATUALIZAÇÃO: Event listeners para função e taxa
   const funcaoSelect = document.querySelector('select[name="funcao"]');
   if (funcaoSelect) {
-    funcaoSelect.addEventListener("change", function() {
+    funcaoSelect.addEventListener("change", function () {
       atualizarTaxaPorFuncao();
       toggleCamposTaxa();
     });
