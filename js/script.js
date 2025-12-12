@@ -297,6 +297,7 @@ async function verificarCadastroExistente(cpf) {
   try {
     const scriptUrl =
       "https://script.google.com/macros/s/AKfycbxG3zJfn6Gp3sMZnZ0jZHHSJlHI4AsUPkoMTO-TJE0p2Cbx9zrpACNdpXVYcFbxKupM/exec";
+    
 
     const cpfLimpo = cpf.replace(/\D/g, "");
 
