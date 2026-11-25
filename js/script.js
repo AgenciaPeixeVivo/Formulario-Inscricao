@@ -19,7 +19,7 @@ const cargosConfig = {
     chavePix:
       "00020126950014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0229INSCRICAO AUX. ADMINISTRATIVO520400005303986540550.005802BR5910----------6014BELO HORIZONTE62070503***630403A6",
   },
-  "Analista Mobilização": {
+  "Analista Administrativo": {
     valor: "R$ 70,00",
     valorTexto: "Analista - R$70,00",
     valorNumero: "70",
@@ -27,7 +27,7 @@ const cargosConfig = {
     chavePix:
       "00020126840014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0218INSCRICAO ANALISTA520400005303986540570.005802BR5910----------6014BELO HORIZONTE62070503***630414BD",
   },
-  "Analista Projetos": {
+  "Analista de Mobilização de Recursos Hídricos": {
     valor: "R$ 70,00",
     valorTexto: "Analista - R$70,00",
     valorNumero: "70",
@@ -35,15 +35,15 @@ const cargosConfig = {
     chavePix:
       "00020126840014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0218INSCRICAO ANALISTA520400005303986540570.005802BR5910----------6014BELO HORIZONTE62070503***630414BD",
   },
-  "Coordenador TI": {
-    valor: "R$ 120,00",
-    valorTexto: "Coordenador - R$120,00",
-    valorNumero: "120",
-    imagem: "img/Coordenador.png",
+  "Analista de Projetos": {
+    valor: "R$ 70,00",
+    valorTexto: "Analista - R$70,00",
+    valorNumero: "70",
+    imagem: "img/analista.png",
     chavePix:
-      "00020126870014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0221INSCRICAO COORDENADOR5204000053039865406120.005802BR5910----------6014BELO HORIZONTE62070503***630441E5",
+      "00020126840014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0218INSCRICAO ANALISTA520400005303986540570.005802BR5910----------6014BELO HORIZONTE62070503***630414BD",
   },
-  "Coordenador Projetos (Engenharia)": {
+  "Especialista em Recursos Hídricos - Área: Projetos (Engenharia)": {
     valor: "R$ 120,00",
     valorTexto: "Coordenador - R$120,00",
     valorNumero: "120",
@@ -52,6 +52,51 @@ const cargosConfig = {
       "00020126870014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0221INSCRICAO COORDENADOR5204000053039865406120.005802BR5910----------6014BELO HORIZONTE62070503***630441E5",
   },
 };
+
+/* ------------------------- */
+/*  CIDADES DE LOTAÇÃO POR FUNÇÃO */
+/* ------------------------- */
+
+// Única fonte das cidades: o select de lotação é montado a partir daqui
+const cidadesPorFuncao = {
+  "Auxiliar Administrativo": ["Belo Horizonte/MG", "Betim/MG", "Caicó/RN"],
+  "Analista Administrativo": ["Belo Horizonte/MG"],
+  "Analista de Mobilização de Recursos Hídricos": ["Caicó/RN"],
+  "Analista de Projetos": ["Belo Horizonte/MG", "Caicó/RN"],
+  "Especialista em Recursos Hídricos - Área: Projetos (Engenharia)": [
+    "Caicó/RN",
+    "Paracatu/MG",
+  ],
+};
+
+function atualizarCidadesPorFuncao() {
+  const funcaoSelect = document.querySelector('select[name="funcao"]');
+  const lotacaoSelect = document.getElementById("lotacao");
+  if (!funcaoSelect || !lotacaoSelect) return;
+
+  const cidades = cidadesPorFuncao[funcaoSelect.value] || [];
+  const valorAtual = lotacaoSelect.value;
+
+  // Sem função escolhida, a lotação fica bloqueada
+  lotacaoSelect.innerHTML = "";
+  lotacaoSelect.add(
+    new Option(
+      cidades.length ? "Selecione" : "Selecione a função primeiro",
+      "",
+    ),
+  );
+  cidades.forEach((cidade) => lotacaoSelect.add(new Option(cidade, cidade)));
+  lotacaoSelect.disabled = cidades.length === 0;
+
+  // Mantém a cidade se ainda for válida; com uma única cidade, já seleciona
+  if (cidades.includes(valorAtual)) {
+    lotacaoSelect.value = valorAtual;
+  } else if (cidades.length === 1) {
+    lotacaoSelect.value = cidades[0];
+  } else {
+    lotacaoSelect.value = "";
+  }
+}
 
 /* ------------------------- */
 /*  ATUALIZAR INFORMAÇÕES PIX */
@@ -535,7 +580,7 @@ function validatePage(pageIndex) {
 
   if (page.id === "page4") {
     const formacaoChecked = Array.from(
-      document.querySelectorAll("#formacaoGroup input")
+      document.querySelectorAll("#formacaoGroup input"),
     ).some((cb) => cb.checked);
     if (!formacaoChecked) {
       valid = false;
@@ -553,15 +598,15 @@ function validatePage(pageIndex) {
     // ✅ CORREÇÃO: VALIDAÇÃO PARA CAMPO "OUTRO" EM ORIGEM DA INFORMAÇÃO
     const origemInfo = document.getElementById("origemInfo");
     const origemInfoOutro = document.getElementById("origemInfoOutro");
-    
+
     if (origemInfo && origemInfo.value === "outro") {
       if (!origemInfoOutro || origemInfoOutro.value.trim() === "") {
         valid = false;
-        
+
         const error = document.createElement("div");
         error.className = "error-message";
         error.textContent = "Por favor, especifique como obteve a informação";
-        
+
         if (origemInfoOutro) {
           origemInfoOutro.insertAdjacentElement("afterend", error);
           origemInfoOutro.style.borderColor = "#dc3545";
@@ -575,15 +620,15 @@ function validatePage(pageIndex) {
     // ✅ CORREÇÃO: VALIDAÇÃO PARA CAMPO DE PARENTESCO
     const parentesco = document.getElementById("parentesco");
     const grauParentesco = document.getElementById("grauParentesco");
-    
+
     if (parentesco && parentesco.value === "sim") {
       if (!grauParentesco || grauParentesco.value.trim() === "") {
         valid = false;
-        
+
         const error = document.createElement("div");
         error.className = "error-message";
         error.textContent = "Por favor, informe o grau de parentesco";
-        
+
         if (grauParentesco) {
           grauParentesco.insertAdjacentElement("afterend", error);
           grauParentesco.style.borderColor = "#dc3545";
@@ -610,6 +655,24 @@ function validatePage(pageIndex) {
     }
   }
 
+  if (page.id === "page6") {
+    // Garante que a cidade de lotação é oferecida para a função escolhida
+    const funcao = document.getElementById("funcao");
+    const lotacao = document.getElementById("lotacao");
+    const cidades = cidadesPorFuncao[funcao.value] || [];
+
+    if (lotacao.value && !cidades.includes(lotacao.value)) {
+      valid = false;
+      const error = document.createElement("div");
+      error.className = "error-message";
+      error.textContent =
+        "Esta cidade não está disponível para a função selecionada";
+      lotacao.insertAdjacentElement("afterend", error);
+      lotacao.style.borderColor = "#dc3545";
+      lotacao.style.background = "#f8d7da";
+    }
+  }
+
   return valid;
 }
 
@@ -621,20 +684,20 @@ function validatePage(pageIndex) {
 document.getElementById("origemInfo").addEventListener("change", (e) => {
   const campo = document.getElementById("origemInfoOutroContainer");
   const inputOutro = document.getElementById("origemInfoOutro");
-  
+
   // Mostrar/ocultar o campo
   campo.classList.toggle("hidden", e.target.value !== "outro");
-  
+
   // Tornar obrigatório apenas quando "outro" for selecionado
   if (inputOutro) {
     inputOutro.required = e.target.value === "outro";
-    
+
     // Limpar o valor se não for "outro"
     if (e.target.value !== "outro") {
       inputOutro.value = "";
       inputOutro.style.borderColor = "";
       inputOutro.style.background = "";
-      
+
       // Remover mensagens de erro
       const error = inputOutro.nextElementSibling;
       if (error && error.className === "error-message") {
@@ -648,20 +711,20 @@ document.getElementById("origemInfo").addEventListener("change", (e) => {
 document.getElementById("parentesco").addEventListener("change", (e) => {
   const campo = document.getElementById("campoGrauParentesco");
   const inputGrau = document.getElementById("grauParentesco");
-  
+
   // Mostrar/ocultar o campo
   campo.classList.toggle("hidden", e.target.value !== "sim");
-  
+
   // Tornar obrigatório apenas quando "sim" for selecionado
   if (inputGrau) {
     inputGrau.required = e.target.value === "sim";
-    
+
     // Limpar o valor se não for "sim"
     if (e.target.value !== "sim") {
       inputGrau.value = "";
       inputGrau.style.borderColor = "";
       inputGrau.style.background = "";
-      
+
       // Remover mensagens de erro
       const error = inputGrau.nextElementSibling;
       if (error && error.className === "error-message") {
@@ -916,7 +979,7 @@ form.addEventListener("submit", async function (e) {
     dados.lgpd = lgpdRadio ? lgpdRadio.value : "Não selecionado";
 
     const comprovanteInput = document.querySelector(
-      'input[name="comprovante"]'
+      'input[name="comprovante"]',
     );
     if (comprovanteInput && comprovanteInput.files[0]) {
       const file = comprovanteInput.files[0];
@@ -973,6 +1036,7 @@ function initializeForm() {
     funcaoSelect.addEventListener("change", function () {
       atualizarTaxaPorFuncao();
       toggleCamposTaxa();
+      atualizarCidadesPorFuncao();
     });
   }
 
@@ -981,6 +1045,7 @@ function initializeForm() {
     taxaSelect.addEventListener("change", toggleCamposTaxa);
   }
 
+  atualizarCidadesPorFuncao();
   toggleCamposTaxa();
   showPage(0);
 }
