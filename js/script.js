@@ -12,44 +12,44 @@ let current = 0;
 
 const cargosConfig = {
   "Auxiliar Administrativo": {
-    valor: "R$ 50,00",
-    valorTexto: "Médio - R$50,00",
-    valorNumero: "50",
-    imagem: "img/AuxAdm.png",
+    valor: "R$ 60,00",
+    valorTexto: "Cargos 1 e 2 - R$60,00",
+    valorNumero: "60",
+    imagem: "img/pix-60.png",
     chavePix:
-      "00020126950014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0229INSCRICAO AUX. ADMINISTRATIVO520400005303986540550.005802BR5910----------6014BELO HORIZONTE62070503***630403A6",
+      "00020126880014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0222INSCRICAO CARGOS 1 E 2520400005303986540560.005802BR5910----------6014BELO HORIZONTE62070503***63043E0F",
   },
   "Analista Administrativo": {
-    valor: "R$ 70,00",
-    valorTexto: "Analista - R$70,00",
-    valorNumero: "70",
-    imagem: "img/analista.png",
+    valor: "R$ 60,00",
+    valorTexto: "Cargos 1 e 2 - R$60,00",
+    valorNumero: "60",
+    imagem: "img/pix-60.png",
     chavePix:
-      "00020126840014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0218INSCRICAO ANALISTA520400005303986540570.005802BR5910----------6014BELO HORIZONTE62070503***630414BD",
+      "00020126880014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0222INSCRICAO CARGOS 1 E 2520400005303986540560.005802BR5910----------6014BELO HORIZONTE62070503***63043E0F",
   },
   "Analista de Mobilização de Recursos Hídricos": {
-    valor: "R$ 70,00",
-    valorTexto: "Analista - R$70,00",
-    valorNumero: "70",
-    imagem: "img/analista.png",
+    valor: "R$ 90,00",
+    valorTexto: "Cargos 3 e 4 - R$90,00",
+    valorNumero: "90",
+    imagem: "img/pix-90.png",
     chavePix:
-      "00020126840014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0218INSCRICAO ANALISTA520400005303986540570.005802BR5910----------6014BELO HORIZONTE62070503***630414BD",
+      "00020126880014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0222INSCRICAO CARGOS 3 E 4520400005303986540590.005802BR5910----------6014BELO HORIZONTE62070503***6304DBA3",
   },
   "Analista de Projetos": {
-    valor: "R$ 70,00",
-    valorTexto: "Analista - R$70,00",
-    valorNumero: "70",
-    imagem: "img/analista.png",
+    valor: "R$ 90,00",
+    valorTexto: "Cargos 3 e 4 - R$90,00",
+    valorNumero: "90",
+    imagem: "img/pix-90.png",
     chavePix:
-      "00020126840014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0218INSCRICAO ANALISTA520400005303986540570.005802BR5910----------6014BELO HORIZONTE62070503***630414BD",
+      "00020126880014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0222INSCRICAO CARGOS 3 E 4520400005303986540590.005802BR5910----------6014BELO HORIZONTE62070503***6304DBA3",
   },
   "Especialista em Recursos Hídricos - Área: Projetos (Engenharia)": {
     valor: "R$ 120,00",
-    valorTexto: "Coordenador - R$120,00",
+    valorTexto: "Cargo 5 - R$120,00",
     valorNumero: "120",
-    imagem: "img/Coordenador.png",
+    imagem: "img/pix-120.png",
     chavePix:
-      "00020126870014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0221INSCRICAO COORDENADOR5204000053039865406120.005802BR5910----------6014BELO HORIZONTE62070503***630441E5",
+      "00020126830014br.gov.bcb.pix0140agenciapeixevivo@agenciapeixevivo.org.br0217INSCRICAO CARGO 55204000053039865406120.005802BR5910----------6014BELO HORIZONTE62070503***630472DF",
   },
 };
 
