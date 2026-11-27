@@ -1,9 +1,15 @@
 // limite-data.js - VERSÃO ULTRA SIMPLES PARA CONCURSO
 
 function verificarPeriodoDisponibilidade() {
-  // Período: 04/12/2025 18:00 até 19/01/2026 18:00
-  const dataInicio = new Date("2025-12-04T18:00:00");
-  const dataFim = new Date("2026-01-19T18:00:00");
+  // Testes locais (arquivo aberto direto ou localhost) não sofrem o bloqueio por data
+  const testeLocal =
+    location.protocol === "file:" ||
+    ["localhost", "127.0.0.1"].includes(location.hostname);
+  if (testeLocal) return;
+
+  // Período: 07/12/2026 18:00 até 29/01/2027 18:00 (horário de Brasília)
+  const dataInicio = new Date("2026-12-07T18:00:00-03:00");
+  const dataFim = new Date("2027-01-29T18:00:00-03:00");
   const agora = new Date();
 
   const form = document.getElementById("formInscricao");
@@ -25,7 +31,7 @@ function verificarPeriodoDisponibilidade() {
     mensagem.innerHTML =
       '<h2 style="margin-bottom:15px;">Inscrições em Breve</h2>' +
       "<p>As inscrições para o Processo Seletivo estarão disponíveis conforme edital:</p>" +
-      '<p style="margin:20px 0;font-size:18px;font-weight:bold;">04/12/2025 às 18:00 até 19/01/2026 às 18:00</p>' +
+      '<p style="margin:20px 0;font-size:18px;font-weight:bold;">07/12/2026 às 18:00 até 29/01/2027 às 18:00</p>' +
       "<p>Volte na data indicada para realizar sua inscrição.</p>";
 
     container.style.display = "none";
@@ -42,7 +48,7 @@ function verificarPeriodoDisponibilidade() {
     mensagem.innerHTML =
       '<h2 style="margin-bottom:15px;">Período de Inscrições Encerrado</h2>' +
       "<p>O período para inscrições no Processo Seletivo foi finalizado conforme edital.</p>" +
-      '<p style="margin:20px 0;font-size:18px;font-weight:bold;">Período: 04/12/2025 18h até 19/01/2026 18h</p>' +
+      '<p style="margin:20px 0;font-size:18px;font-weight:bold;">Período: 07/12/2026 18h até 29/01/2027 18h</p>' +
       "<p>Consulte o edital para informações sobre as próximas etapas.</p>";
 
     container.style.display = "none";
@@ -57,7 +63,7 @@ function verificarPeriodoDisponibilidade() {
       "background:#e8f5e9;border:2px solid #2e7d32;border-radius:12px;padding:15px 20px;margin:20px auto;color:#1b5e20;text-align:center;max-width:800px;font-size:14px; margin-top:0;";
 
     // banner.innerHTML =
-    //   '<p style="margin:0;font-weight:bold;">INSCRIÇÕES ABERTAS (04/12/2025 18h - 19/01/2026 18h)</p>' +
+    //   '<p style="margin:0;font-weight:bold;">INSCRIÇÕES ABERTAS (07/12/2026 18h - 29/01/2027 18h)</p>' +
     //   '<p style="margin:5px 0 0 0;font-size:13px;">Consulte o edital para informações completas.</p>';
 
     // container.insertBefore(banner, form);

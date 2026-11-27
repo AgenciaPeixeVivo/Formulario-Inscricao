@@ -376,21 +376,18 @@
             <select id="funcao" name="funcao" required>
               <option value="">Selecione</option>
               <option>Auxiliar Administrativo</option>
-              <option>Analista Mobilização</option>
-              <option>Analista Projetos</option>
-              <option>Coordenador TI</option>
-              <option>Coordenador Projetos (Engenharia)</option>
+              <option>Analista Administrativo</option>
+              <option>Analista de Mobilização de Recursos Hídricos</option>
+              <option>Analista de Projetos</option>
+              <option>Especialista em Recursos Hídricos - Área: Projetos (Engenharia)</option>
             </select>
           </div>
 
           <div class="form-field">
             <label for="lotacao">Cidade de Lotação</label>
-            <select id="lotacao" name="lotacao" required>
-              <option value="">Selecione</option>
-              <option>Belo Horizonte/MG</option>
-              <option>Betim/MG</option>
-              <option>Montes Claros/MG</option>
-              <option>Paracatu/MG</option>
+            <!-- Opções montadas pelo script.js conforme a função (cidadesPorFuncao) -->
+            <select id="lotacao" name="lotacao" required disabled>
+              <option value="">Selecione a função primeiro</option>
             </select>
           </div>
 
@@ -399,9 +396,9 @@
             <select id="taxa" name="taxa" required>
               <option value="">Selecione</option>
               <!-- <option value="isento">Isento</option> -->
-              <option value="50">Médio - R$50,00</option>
-              <option value="70">Analista - R$70,00</option>
-              <option value="120">Coordenador - R$120,00</option>
+              <option value="60">Cargos 1 e 2 - R$60,00</option>
+              <option value="90">Cargos 3 e 4 - R$90,00</option>
+              <option value="120">Cargo 5 - R$120,00</option>
             </select>
           </div>
 
