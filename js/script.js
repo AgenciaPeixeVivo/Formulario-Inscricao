@@ -910,7 +910,10 @@ form.addEventListener("submit", async function (e) {
     submitBtn.textContent = "Verificando...";
     submitBtn.disabled = true;
 
-    const jaCadastrado = await verificarCadastroExistente(cpf);
+    // Em ambiente de teste a planilha não é consultada
+    const jaCadastrado = AMBIENTE_TESTE
+      ? false
+      : await verificarCadastroExistente(cpf);
 
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
@@ -991,6 +994,14 @@ form.addEventListener("submit", async function (e) {
       dados.comprovanteBase64 = await fileToBase64(file);
       dados.comprovanteNome = file.name;
       dados.comprovanteTipo = file.type;
+    }
+
+    // Em ambiente de teste a inscrição é validada, mas não é enviada ao backend
+    if (AMBIENTE_TESTE) {
+      console.log("Ambiente de teste - dados que seriam enviados:", dados);
+      alert("AMBIENTE DE TESTE: inscrição validada, mas NÃO enviada.");
+      window.location.href = "confirmacao/confirmacao.html";
+      return;
     }
 
     const scriptUrl =

@@ -1,11 +1,8 @@
 // limite-data.js - VERSÃO ULTRA SIMPLES PARA CONCURSO
 
 function verificarPeriodoDisponibilidade() {
-  // Testes locais (arquivo aberto direto ou localhost) não sofrem o bloqueio por data
-  const testeLocal =
-    location.protocol === "file:" ||
-    ["localhost", "127.0.0.1"].includes(location.hostname);
-  if (testeLocal) return;
+  // Ambientes de teste (ver ambiente.js) não sofrem o bloqueio por data
+  if (AMBIENTE_TESTE) return;
 
   // Período: 07/12/2026 18:00 até 29/01/2027 18:00 (horário de Brasília)
   const dataInicio = new Date("2026-12-07T18:00:00-03:00");
