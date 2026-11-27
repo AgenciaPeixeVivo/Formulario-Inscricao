@@ -59,10 +59,15 @@ const cargosConfig = {
 
 // Única fonte das cidades: o select de lotação é montado a partir daqui
 const cidadesPorFuncao = {
-  "Auxiliar Administrativo": ["Belo Horizonte/MG", "Betim/MG", "Caicó/RN"],
-  "Analista Administrativo": ["Belo Horizonte/MG"],
-  "Analista de Mobilização de Recursos Hídricos": ["Caicó/RN"],
-  "Analista de Projetos": ["Belo Horizonte/MG", "Caicó/RN"],
+  "Auxiliar Administrativo": [
+    "Belo Horizonte/MG",
+    "Betim/MG",
+    "Caicó/RN",
+    "Piumhi/MG",
+  ],
+  "Analista Administrativo": ["Belo Horizonte/MG", "Caicó/RN"],
+  "Analista de Mobilização de Recursos Hídricos": ["Caicó/RN", "Piumhi/MG"],
+  "Analista de Projetos": ["Belo Horizonte/MG", "Caicó/RN", "Piumhi/MG"],
   "Especialista em Recursos Hídricos - Área: Projetos (Engenharia)": [
     "Caicó/RN",
     "Paracatu/MG",
